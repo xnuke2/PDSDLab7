@@ -21,8 +21,10 @@ private:
 		}
 
 	};
+
 	TreeNode* head;
 public:
+	string nums = "";
 	BinarySearchTree() {
 		head = NULL;
 	}
@@ -31,8 +33,9 @@ public:
 	}
 	void Add(int val) {
 		Add(head, val);
+		nums +=" "+ to_string(val) ;
 	}
-	void Add(TreeNode* &r, int val)   //функция создания нового дерева
+	void Add(TreeNode* &r, int val)
 	{
 		if (!r)
 		{
@@ -47,8 +50,10 @@ public:
 	BinarySearchTree(int min,int max, int length) {
 		head = NULL;
 		for (int i = 0; i < length; i++) {
-			Add(rand() % (max - min + 1) + min);
+			int tmp = rand() % (max - min + 1) + min;
+			Add(tmp);
 		}
+		
 	}
 	string UpDown() {
 		string tmp ="";
@@ -88,15 +93,19 @@ public:
 		return tmp;
 	}
 	~BinarySearchTree() {
-		Delete(head);
+		Delete();
 	}
-	void Delete(TreeNode* &_head) {
+	void Delete() {
+		if (IsEmpty())return;
+		Delete(head);
+		head = NULL;
+	}
+	void Delete(TreeNode*& _head) {
+		
 		if (_head->left != NULL)Delete(_head->left);
 		if (_head->right != NULL)Delete(_head->right);
 		delete _head;
 		return;
-		
-
 	}
 };
 
